@@ -1,5 +1,7 @@
 import express from 'express';
-import { obtenerSuperHeroePorIdController, obtenerTodosLosSuperHeroesController, buscarSuperHeroePorAtributoController, obtenerSuperHeroesMayoresA100Controller, crearNuevoSuperHeroController, modificarSuperHeroController, eliminarSuperHeroPorIDController, eliminarSuperHeroPorNombreController  } from '../controllers/superheroesController.mjs'
+import { obtenerSuperHeroePorIdController, obtenerTodosLosSuperHeroesController, buscarSuperHeroePorAtributoController, obtenerSuperHeroesMayoresA100Controller, crearNuevoSuperHeroController, modificarSuperHeroController, eliminarSuperHeroPorIDController, eliminarSuperHeroPorNombreController  } from '../controllers/superheroesController.mjs';
+import { superHeroesValidation } from '../validations/heroValidationsRules.mjs';
+import { handleValidationErrors } from '../validations/heroError.middleware.mjs';
 
 const router = express.Router();
 
@@ -8,7 +10,8 @@ router.get('/heroes/atributo/:atributo/:valor', buscarSuperHeroePorAtributoContr
 router.get('/heroes/:id', obtenerSuperHeroePorIdController);
 router.get('/heroes', obtenerTodosLosSuperHeroesController);
 
-router.post('/heroes', crearNuevoSuperHeroController);
+router.post('/heroes', superHeroesValidation(), handleValidationErrors,  crearNuevoSuperHeroController);
+
 router.put('/heroes/:id', modificarSuperHeroController);
 
 router.delete('/heroes/:id', eliminarSuperHeroPorIDController);

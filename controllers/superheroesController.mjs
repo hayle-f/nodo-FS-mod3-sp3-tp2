@@ -73,15 +73,6 @@ export async function obtenerSuperHeroesMayoresA100Controller(req, res) {
 export async function crearNuevoSuperHeroController(req, res) {
     try {
         const heroDatos = req.body;
-        
-        if (
-            !heroDatos.nombreSuperheroe?.trim() ||
-            !heroDatos.nombreReal?.trim() ||
-            typeof heroDatos.edad !== 'number' || heroDatos.edad < 0
-        ) {
-        return res.status(400).send({ mensaje: 'Faltan datos válidos del superhéroe' });
-        }
-
         const nuevoSuperheroe = await crearNuevoSuperHero(heroDatos);
 
         const nuevoSuperHeroeFormateado = renderizarSuperheroe(nuevoSuperheroe);
